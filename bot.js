@@ -1,3 +1,12 @@
+const express = require('express')
+const app = express()
+
+app.get('/', function (req, res) {
+  res.send('Hello World')
+})
+
+
+
 const Eris = require("eris");
 const Util = require("./util");
 const Sheet = require("./sheet");
@@ -71,3 +80,6 @@ bot.on("messageCreate", async (msg) => {
 });
 
 bot.connect();
+
+
+app.listen(3000)
