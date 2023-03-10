@@ -37,7 +37,7 @@ class Sheet {
     }
 
     getHuongDan(command) {
-        const content = `+ ${command} hocphi: Kiểm tra học phí\n+ ${command} nhanxet: Lấy thông tin nhận xét`;
+        const content = `+ học phí: Kiểm tra học phí\n+ nhận xét: Lấy thông tin nhận xét`;
         return `Kiểm tra thông tin của **${this.getNameStudent()}** bằng các lệnh sau:\n`+ Util.wrapBox(content);
     }
 
