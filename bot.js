@@ -82,7 +82,7 @@ bot.on("messageCreate", async (msg) => {
 bot.connect();
 
 
-app.listen(80)
+app.listen(3000)
 
 
 module.exports = app;
