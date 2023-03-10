@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "name": "thang-class",
+    "builds": [
+       { "src": "app.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+       { "src": "/(.*)", "dest": "/bot.js" }
+    ]
+ }
