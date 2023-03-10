@@ -83,3 +83,6 @@ bot.connect();
 
 
 app.listen(80)
+
+
+module.exports = app;
