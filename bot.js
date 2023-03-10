@@ -82,4 +82,4 @@ bot.on("messageCreate", async (msg) => {
 bot.connect();
 
 
-app.listen(3000)
+app.listen(80)
