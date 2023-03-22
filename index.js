@@ -1,4 +1,5 @@
 const express = require('express')
+const { Configuration, OpenAIApi } = require("openai");
 const app = express()
 
 app.get('/', function (req, res) {
@@ -9,10 +10,17 @@ const Eris = require("eris");
 const Util = require("./util");
 const Sheet = require("./sheet");
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+
 require('dotenv').config()
 
 const doc = new GoogleSpreadsheet('1AmNKyPKO614IjBinzTZaHrsreePpNfrCjA8WWjW6LuI');
 const sheet = new Sheet(doc);
+
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
 
 doc.useServiceAccountAuth({
     client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -26,6 +34,15 @@ const bot = new Eris(process.env.DISCORD_BOT_TOKEN, {
         "guildMessages"
     ]
 });
+
+async function runCompletion(message) {
+    const completion = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: message,
+        max_tokens: 200,
+    });
+    return completion.data.choices[0].text;
+}
 
 bot.on("ready", () => {
     console.log("Bot is connected and ready!");
@@ -73,12 +90,12 @@ bot.on("messageCreate", async (msg) => {
                                 break;
 
                             default:
-                                bot.createMessage(msg.channel.id, sheet.getHuongDan());
+                                runCompletion(msg.content.substring(1)).then(result => bot.createMessage(msg.channel.id, result));
                                 break;
                         }
                     }
                 } else {
-                    bot.createMessage(msg.channel.id, "Không tồn tại học viên");
+                    runCompletion(msg.content.substring(1)).then(result => bot.createMessage(msg.channel.id, result));
                 }
             }
         }
