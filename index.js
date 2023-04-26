@@ -6,6 +6,10 @@ app.get('/', function (req, res) {
     res.send('Hello World')
 })
 
+app.get('/demo', function (req, res) {
+    res.send('Hello World')
+})
+
 const Eris = require("eris");
 const Util = require("./util");
 const Sheet = require("./sheet");
